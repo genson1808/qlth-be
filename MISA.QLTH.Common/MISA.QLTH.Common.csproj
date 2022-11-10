@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.123" />
+      <PackageReference Include="FluentValidation" Version="11.2.2" />
+      <PackageReference Include="MySqlConnector" Version="2.2.0-rc.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Entities\ErrorsMessage\Errors..viresx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Errors.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Entities\ErrorsMessage" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\6.0.9\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

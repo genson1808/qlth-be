@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{D6238705-F085-45B1-BBC8-EB409368F6B5}|Default">
+  <MonoDevelop.Ide.ItemProperties.MISA.QLTH.API PreferredExecutionTarget="/Applications/Brave Browser.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="MISA.QLTH.Common/Entities/Subject.cs">
+    <Files>
+      <File FileName="MISA.QLTH.DL/EmployeeDL/IEmployeeDL.cs" Line="52" Column="46" />
+      <File FileName="MISA.QLTH.DL/BaseDL/IBaseDL.cs" Line="3" Column="18" />
+      <File FileName="MISA.QLTH.DL/EmployeeDL/EmployeeDL.cs" Line="90" Column="23" />
+      <File FileName="MISA.QLTH.Common/Entities/Subject.cs" Line="24" Column="22" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="MISA.QLTH" expanded="True">
+            <Node name="MISA.QLTH.Common" expanded="True">
+              <Node name="Entities" expanded="True" />
+            </Node>
+            <Node name="MISA.QLTH.DL" expanded="True">
+              <Node name="EmployeeDL" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>

@@ -1,4 +1,5 @@
 using FluentValidation;
+using MISA.QLTH.API;
 using MISA.QLTH.API.Configurations;
 using MISA.QLTH.API.Middleware;
 using MISA.QLTH.BL.BaseBL;
@@ -6,14 +7,14 @@ using MISA.QLTH.BL.DepartmentBL;
 using MISA.QLTH.BL.EmployeeBL;
 using MISA.QLTH.BL.RoomBL;
 using MISA.QLTH.BL.SubjectBL;
-using MISA.QLTH.BL.Validations;
-using MISA.QLTH.Common.Entities;
 using MISA.QLTH.DL;
 using MISA.QLTH.DL.BaseDL;
 using MISA.QLTH.DL.DepartmentDL;
 using MISA.QLTH.DL.EmployeeDL;
 using MISA.QLTH.DL.RoomDL;
 using MISA.QLTH.DL.SubjectDL;
+using FluentValidation.AspNetCore;
+using MISA.QLTH.BL;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,14 @@ builder.Services.AddScoped<IRoomDL, RoomDL>();
 builder.Services.AddScoped<IRoomBL, RoomBL>();
 builder.Services.AddScoped<ISubjectDL, SubjectDL>();
 builder.Services.AddScoped<ISubjectBL, SubjectBL>();
-builder.Services.AddScoped<IValidator<Employee>, CreateEmployeeValidator>();
+
+//builder.Services.AddFluentValidation();
+builder.Services.AddControllers().AddFluentValidation().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = ValidationResponse.MakeValidationResponse;
+});
+//builder.Services.AddScoped<IValidator<Employee>, CreateEmployeeValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<IAssemplyMarker>();
 
 // Add services to the container.
 DatabaseContext.ConnectionString = builder.Configuration.GetConnectionString("MariaConnetionString");

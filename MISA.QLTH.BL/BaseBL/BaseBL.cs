@@ -64,4 +64,9 @@ public class BaseBL<T> : IBaseBL<T>
     {
         return await _baseDL.DeleteMultipleRecord(idRecordList);
     }
+
+    public async Task<bool> CheckDuplicateCode(string code)
+    {
+        return await _baseDL.CheckDuplicateCode(code);
+    }
 }

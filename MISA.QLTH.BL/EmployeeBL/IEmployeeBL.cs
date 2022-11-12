@@ -6,6 +6,15 @@ namespace MISA.QLTH.BL.EmployeeBL;
 
 public interface IEmployeeBL : IBaseBL<Employee>
 {
+
+    /// <summary>
+    /// Thêm cán bộ, giáo viên
+    /// </summary>
+    /// <param name="employee">Dữ liệu cán bộ, giáo viên</param>
+    /// <returns>ID</returns>
+    /// AUTHOR: SONTB (10/10/2022)
+    public Task<Guid> CreateEmployee(CreateEmployee employee);
+
     /// <summary>
     /// Chỉnh sửa cán bộ, giáo viên
     /// </summary>

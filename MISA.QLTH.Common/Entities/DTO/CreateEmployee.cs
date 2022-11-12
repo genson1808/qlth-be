@@ -1,7 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MISA.QLTH.Common.Entities.DTO;
 
-public class CreateEmployee
+public class CreateEmployee : BaseEntity
 {
+    /// <summary>
+    /// ID cán bộ, giáo viên
+    /// </summary>
+    [Key]
+    public Guid EmployeeID { get; set; }
+
     /// <summary>
     /// Mã cán bộ, giáo viên
     /// </summary>
@@ -37,9 +45,9 @@ public class CreateEmployee
     /// </summary>
     public DateTime? DayOfResignation { get; set; }
 
-    public Guid DepartmentID { get; set; }
+    public Guid? DepartmentID { get; set; }
 
-    public List<Guid> Subjects { get; set; }
+    public List<Guid>? Subjects { get; set; }
 
-    public List<Guid> Rooms { get; set; }
+    public List<Guid>? Rooms { get; set; }
 }

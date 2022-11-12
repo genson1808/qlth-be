@@ -9,6 +9,78 @@ namespace MISA.QLTH.DL.EmployeeDL
 {
     public class EmployeeDL : BaseDL<Employee>, IEmployeeDL
     {
+        public async Task<Guid> CreateEmployee(CreateEmployee employee)
+        {
+            var storedProcedureName = "Proc_Employee_Create";
+
+            string localDate = DateTime.UtcNow.ToString("ddTHH-MM-yyyy\\:mm\\:ss.fffffffzzz");
+            employee.ModifiedDate = DateTime.Now;
+            employee.CreatedDate = DateTime.Now;
+            employee.EmployeeID = Guid.NewGuid();
+
+            var parameters = new DynamicParameters();
+
+            string subjects;
+            string insertSubjects = "";
+            if (employee.Subjects != null && employee.Subjects.Count > 0)
+            {
+                subjects = Utils.BuildValuesFromGuidList(employee.Subjects, employee.EmployeeID);
+                insertSubjects = $"INSERT SubjectEmployee (SubjectID, EmployeeID) VALUES {subjects};";
+            }
+
+            string rooms;
+            string insertRooms = "";
+            if (employee.Rooms != null && employee.Rooms.Count > 0)
+            {
+                rooms = Utils.BuildValuesFromGuidList(employee.Rooms, employee.EmployeeID);
+                insertRooms = $"INSERT RoomEmployee (RoomID, EmployeeID) VALUES {rooms};";
+            }
+
+            parameters.Add("v_EmpolyeeID", employee.EmployeeID);
+            parameters.Add("v_EmployeeCode", employee.EmployeeCode);
+            parameters.Add("v_EmployeeName", employee.EmployeeName);
+            parameters.Add("v_PhoneNumber", employee.PhoneNumber);
+            parameters.Add("v_Email", employee.Email);
+            parameters.Add("v_DepartmentID", employee.DepartmentID);
+            parameters.Add("v_IsEquipmentManagement", employee.IsEquipmentManagement);
+            parameters.Add("v_IsWorking", employee.IsWorking);
+            parameters.Add("v_DayOfResignation", employee.DayOfResignation);
+            parameters.Add("v_CreatedDate", employee.CreatedDate);
+            parameters.Add("v_CreatedBy", employee.CreatedBy);
+            parameters.Add("v_ModifiedDate", employee.ModifiedDate);
+            parameters.Add("v_ModifiedBy", employee.ModifiedBy);
+
+            using (var sqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var numberOfAffectedRow = 0;
+                sqlConnection.Open();
+                using (var transaction = sqlConnection.BeginTransaction())
+                {
+                    numberOfAffectedRow = await sqlConnection.ExecuteAsync(storedProcedureName, parameters,
+                        commandType: System.Data.CommandType.StoredProcedure, transaction: transaction);
+
+                    if (employee.Subjects != null && employee.Subjects.Count > 0)
+                    {
+                        await sqlConnection.ExecuteAsync(insertSubjects, transaction: transaction);
+                    }
+
+                    if (employee.Rooms != null && employee.Rooms.Count > 0)
+                    {
+                        await sqlConnection.ExecuteAsync(insertRooms, transaction: transaction);
+                    }
+
+                    transaction.Commit();
+                }
+
+                if (numberOfAffectedRow > 0)
+                {
+                    return employee.EmployeeID;
+                }
+
+                return Guid.Empty;
+            }
+        }
+
         /// <summary>
         /// Lấy mã cán bộ, giáo viên tự động
         /// </summary>
@@ -26,8 +98,9 @@ namespace MISA.QLTH.DL.EmployeeDL
 
                 // Xử lý sinh mã nhân viên tự động tăng
                 // Cắt chuỗi mã nhân viên lớn nhất trong hệ thống để lấy phần số
-                // Mã nhân viên mới = "MS" + Giá trị cắt chuỗi ở  trên + 1
-                var newCode = "MS" + (Int64.Parse(lastCode.Substring(2) + 1)).ToString();
+                // Mã nhân viên mới = "NV" + Giá trị cắt chuỗi ở  trên + 1
+                var number = Int64.Parse(lastCode.Substring(2)) + 1;
+                var newCode = $"NV{number}";
                 return newCode;
             }
         }
@@ -163,10 +236,25 @@ namespace MISA.QLTH.DL.EmployeeDL
             parameters.Add("v_EmployeeID", employeeID);
             using (var sqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
             {
-                var isDuplicated = await sqlConnection.QueryFirstOrDefaultAsync<Employee>(storedProcedureName,
+                var isDuplicated = await sqlConnection.QueryFirstOrDefaultAsync<bool>(storedProcedureName,
                     parameters,
                     commandType: System.Data.CommandType.StoredProcedure);
-                return isDuplicated != null;
+                return isDuplicated;
+            }
+        }
+
+        public async Task<bool> CheckDuplicateEmail(string email)
+        {
+            var storedProcedureName = "Proc_Employee_CheckEmailExisted";
+            var parameters = new DynamicParameters();
+            parameters.Add("v_Email", email);
+
+            using (var sqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+            {
+                var isExisted = await sqlConnection.QueryFirstOrDefaultAsync<bool>(storedProcedureName,
+                    parameters,
+                    commandType: System.Data.CommandType.StoredProcedure);
+                return isExisted;
             }
         }
 

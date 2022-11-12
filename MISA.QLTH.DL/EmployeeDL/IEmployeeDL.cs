@@ -14,6 +14,14 @@ namespace MISA.QLTH.DL.EmployeeDL
         /// <returns>Số bản ghi bị ảnh hưởng</returns>
         /// AUTHOR: SONTB (05/10/2022)
         public Task<int> UpdateEmployee(Guid employeeID, Employee employee);
+        
+        /// <summary>
+        /// Thêm cán bộ, giáo viên
+        /// </summary>
+        /// <param name="employee">Dữ liệu cán bộ, giáo viên</param>
+        /// <returns>ID</returns>
+        /// AUTHOR: SONTB (10/10/2022)
+        public Task<Guid> CreateEmployee(CreateEmployee employee);
 
         /// <summary>
         /// Lấy mã cán bộ, giáo viên tự động
@@ -52,8 +60,15 @@ namespace MISA.QLTH.DL.EmployeeDL
         /// <param name="employeeID"></param>
         /// <param name="email"></param>
         /// <param name="employeeCode"></param>
-        /// AUTHOR: SONTB (06/10/2022)
+        /// AUTHOR: SONTB (10/10/2022)
         public Task<bool> CheckDuplicate(Guid employeeID, string email, string employeeCode);
+        
+        /// <summary>
+        /// Kiểm tra các trường email có bị dupliadte hay không
+        /// </summary>
+        /// <param name="email"></param>
+        /// AUTHOR: SONTB (10/10/2022)
+        public Task<bool> CheckDuplicateEmail(string email);
         
         
         /// <summary>

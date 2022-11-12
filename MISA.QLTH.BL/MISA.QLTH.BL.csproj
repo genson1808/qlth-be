@@ -8,12 +8,21 @@
 
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.0.123" />
-      <PackageReference Include="FluentValidation" Version="11.2.2" />
       <PackageReference Include="MySqlConnector" Version="2.2.0-rc.2" />
+      <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MISA.QLTH.DL\MISA.QLTH.DL.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="FluentValidation.AspNetCore" />
+      <None Remove="Validations\" />
+      <None Remove="common\" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Validations\" />
+      <Folder Include="common\" />
+    </ItemGroup>
 </Project>

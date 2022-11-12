@@ -13,7 +13,7 @@ namespace MISA.QLTH.Common.Entities
         /// ID tổ chuyên môn
         /// </summary>
         [Key]
-        public Guid DepartmentID{ get; set; }
+        public Guid? DepartmentID{ get; set; }
 
         /// <summary>
         /// Mã tổ chuyên môn

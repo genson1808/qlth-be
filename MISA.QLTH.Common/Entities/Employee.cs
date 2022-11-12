@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace MISA.QLTH.Common.Entities
 
@@ -33,8 +34,9 @@ namespace MISA.QLTH.Common.Entities
         /// <summary>
         /// Email cán bộ, giáo viên
         /// </summary>
-        public string? Email { get; set; }
-        public Guid? DepartmentID { get; set; }
+        public String? Email { get; set; }
+        
+        public Guid DepartmentID { get; set; }
 
         /// <summary>
         /// Cán bộ, giáo viên là đào tạo quản lý thiết bị

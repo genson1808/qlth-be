@@ -11,14 +11,29 @@ public static class Utils
         var parameters = new DynamicParameters();
         foreach (var property in properties)
         {
-            if (property.Name == "Department" || property.Name == "Subjects" || property.Name == "Rooms" ||
-                property.Name == "DepartmentName")
+            if (property.Name is "Department" or "Subjects" or "Rooms" or "DepartmentName")
             {
                 continue;
             }
 
             string propertyName = $"v_{property}";
-            var propertyValue = property.GetValue(entity);
+            object? propertyValue = null;
+            var value = property.GetValue(entity);
+            var type = value?.GetType();
+
+            if (value != null && type == typeof(string) && !value.Equals(""))
+            {
+                propertyValue = value;
+            }
+            else if (value != null && type == typeof(Guid) && !value.Equals(Guid.Empty))
+            {
+                propertyValue = value;
+            }
+            else if (value != null && type != typeof(string) && type != typeof(Guid))
+            {
+                propertyValue = value;
+            }
+
             parameters.Add(propertyName, propertyValue);
         }
 
@@ -94,9 +109,10 @@ public static class Utils
                 else
                 {
                     var q = $"{sort.Key} {sort.Value}";
-                    orderClauses.Append(q);;
+                    orderClauses.Append(q);
+                    ;
                 }
-                
+
                 if (sort.Equals(sorts.ElementAt(sorts.Count - 1)))
                 {
                     continue;
@@ -107,5 +123,24 @@ public static class Utils
         }
 
         return orderClauses.ToString();
+    }
+
+    public static string BuildValuesFromGuidList(List<Guid>? guids, Guid relationshipKey)
+    {
+        var rs = new StringBuilder();
+
+        if (guids != null && guids.Count > 0 && relationshipKey != Guid.Empty)
+        {
+            for (int i = 0; i < guids.Count ; i++)
+            {
+                rs.Append($"('{guids[i].ToString()}','{relationshipKey}')");
+                if (i != guids.Count - 1)
+                {
+                    rs.Append(",");
+                } 
+            }
+        }
+
+        return rs.ToString();
     }
 }

@@ -84,4 +84,9 @@ public class EmployeeBL : BaseBL<Employee>, IEmployeeBL
     {
         return await _employeeDL.CheckExistedByID(employeeID);
     }
+
+    public async Task<Guid> CreateEmployee(CreateEmployee employee)
+    {
+        return await _employeeDL.CreateEmployee(employee);
+    }
 }

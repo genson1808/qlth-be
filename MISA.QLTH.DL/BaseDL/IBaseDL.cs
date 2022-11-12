@@ -31,7 +31,7 @@ public interface IBaseDL<T>
     /// <param name="code">Code của bản ghi muốn lấy</param>
     /// <returns>true/false</returns>
     /// AUTHOR: SONTB (10/10/2022)
-    public Task<bool> GetRecordByID(string code);
+    public Task<bool> CheckDuplicateCode(string code);
 
     /// <summary>
     /// Xoá một bản ghi

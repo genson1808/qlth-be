@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using MISA.QLTH.API.Models;
 using MISA.QLTH.BL.EmployeeBL;
 using MISA.QLTH.Common.Entities;
+using MISA.QLTH.Common.Entities.DTO;
 using MISA.QLTH.Common.Exceptions;
+using ValidationException = FluentValidation.ValidationException;
 
 namespace MISA.QLTH.API.Controllers;
 
@@ -21,16 +23,9 @@ public class EmployeesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateEmployee(Employee request,
-        [FromServices] IValidator<Employee> validator)
+    public async Task<IActionResult> CreateEmployee(CreateEmployee request)
     {
-        ValidationResult validationResult = validator.Validate(request);
-        if (!validationResult.IsValid)
-        {
-            throw new ValidationException(validationResult.Errors);
-        }
-
-        var result = await _employeeBL.InsertRecord(request);
+        var result = await _employeeBL.CreateEmployee(request);
 
         return StatusCode((int)HttpStatusCode.Created, result.ToString());
     }
@@ -46,6 +41,15 @@ public class EmployeesController : ControllerBase
         }
 
         var result = await _employeeBL.GetEmployeeByID(EmployeeID);
+
+        return StatusCode((int)HttpStatusCode.OK, result);
+    }
+    
+    
+    [HttpGet("code")]
+    public async Task<IActionResult> GetNextCode()
+    {
+        var result = await _employeeBL.GetNextEmployeeCode();
 
         return StatusCode((int)HttpStatusCode.OK, result);
     }
@@ -95,11 +99,11 @@ public class EmployeesController : ControllerBase
         var deleted = await _employeeBL.DeleteRecordByID(EmployeeID);
         return Ok(deleted.ToString());
     }
-    
+
     [HttpDelete("multiple")]
     public async Task<IActionResult> DeleteEmployees([FromBody] List<Guid> recordIDList)
     {
-        var numberOfAffected  = await _employeeBL.DeleteMultipleRecord(recordIDList);
+        var numberOfAffected = await _employeeBL.DeleteMultipleRecord(recordIDList);
         if (numberOfAffected <= 0)
         {
             throw new BadRequestException("Yêu cầu tồi tệ .");
@@ -107,5 +111,4 @@ public class EmployeesController : ControllerBase
 
         return Ok(numberOfAffected.ToString());
     }
-    
 }

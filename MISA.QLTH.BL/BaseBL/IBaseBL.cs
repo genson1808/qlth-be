@@ -34,6 +34,15 @@ public interface IBaseBL<T>
     public Task<int> DeleteRecordByID(Guid id);
 
     /// <summary>
+    /// Kiểm tra mã bản ghi có bị trùng lặp hay không
+    /// </summary>
+    /// <param name="code">Code của bản ghi muốn lấy</param>
+    /// <returns>true/false</returns>
+    /// AUTHOR: SONTB (10/10/2022)
+    public Task<bool> CheckDuplicateCode(string code);
+
+
+    /// <summary>
     /// Xoá nhiều bản ghi
     /// </summary>
     /// <param name="idRecordList">Danh sách ID của các bản ghi muốn xoá</param>

@@ -37,9 +37,10 @@ public class BaseDL<T> : IBaseDL<T>
         string className = typeof(T).Name;
         string insertStoreProcedureName = $"Proc_{className}_Insert{className}";
         string localDate = DateTime.UtcNow.ToString("ddTHH-MM-yyyy\\:mm\\:ss.fffffffzzz");
-        record.GetType().GetProperty($"{className}ID")?.SetValue(record, Guid.NewGuid(), null);
-        record.GetType().GetProperty("CreatedDate")?.SetValue(record, DateTime.Now, null);
-        record.GetType().GetProperty("UpdatedDate")?.SetValue(record, DateTime.Now, null);
+        record.GetType().GetProperty($"{className}ID").SetValue(record, Guid.NewGuid(), null);
+        var nơ = DateTime.Now;
+        record.GetType().GetProperty("CreatedDate").SetValue(record, DateTime.Now, null);
+        record.GetType().GetProperty("ModifiedDate").SetValue(record, DateTime.Now, null);
 
         // Chuẩn bị tham số đầu vào stored procedure
         var parameters = Utils.EntityAllDynamicParams(record);
@@ -165,5 +166,31 @@ public class BaseDL<T> : IBaseDL<T>
             }
         });
         return numberOfAffectedRow;
+    }
+
+    public async Task<bool> CheckDuplicateCode(string code)
+    {
+        string className = typeof(T).Name;
+        // Chuẩn bị tên Stored procedure
+        string storedProcedureName = $"Proc_{className}_CheckCodeExisted";
+
+        // Chuẩn bị tham số cho stored procedure
+        var parameters = new DynamicParameters();
+        parameters.Add($"v_{className}Code", code);
+
+        using (var mysqlConnection = new MySqlConnection(DatabaseContext.ConnectionString))
+        {
+            // Thực hiện gọi stored procedure vào Db với tham số ở trên
+            var result = await mysqlConnection.QueryFirstOrDefault(
+                storedProcedureName,
+                parameters,
+                commandType: System.Data.CommandType.StoredProcedure);
+
+            if(result != null) {
+                return true; 
+	        }
+        }
+
+        return false;
     }
 }

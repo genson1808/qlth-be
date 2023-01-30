@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLTH.API", "QLTH.API\QLTH.API.csproj", "{D6238705-F085-45B1-BBC8-EB409368F6B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLTH.DL", "QLTH.DL\QLTH.DL.csproj", "{E78E32BF-D8C5-46CF-A5E7-96087834B936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLTH.Common", "QLTH.Common\QLTH.Common.csproj", "{571F0F58-E936-4D18-9945-7E452AC63DB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QLTH.BL", "QLTH.BL\QLTH.BL.csproj", "{FEACB192-FD92-4E37-84FF-E7FB95E60267}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D6238705-F085-45B1-BBC8-EB409368F6B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6238705-F085-45B1-BBC8-EB409368F6B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6238705-F085-45B1-BBC8-EB409368F6B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6238705-F085-45B1-BBC8-EB409368F6B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E78E32BF-D8C5-46CF-A5E7-96087834B936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E78E32BF-D8C5-46CF-A5E7-96087834B936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E78E32BF-D8C5-46CF-A5E7-96087834B936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E78E32BF-D8C5-46CF-A5E7-96087834B936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{571F0F58-E936-4D18-9945-7E452AC63DB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{571F0F58-E936-4D18-9945-7E452AC63DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{571F0F58-E936-4D18-9945-7E452AC63DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{571F0F58-E936-4D18-9945-7E452AC63DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEACB192-FD92-4E37-84FF-E7FB95E60267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEACB192-FD92-4E37-84FF-E7FB95E60267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEACB192-FD92-4E37-84FF-E7FB95E60267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEACB192-FD92-4E37-84FF-E7FB95E60267}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -43,5 +43,5 @@ dotnet add MISA.QLTH.API reference MISA.QLTH.BL/ MISA.QLTH.DL MISA.QLTH.Common
 ```
 
 
- var connectionString = "Host=127.0.0.1; Port=3307; Database=MISAQlth_Development; User Id = root; Password = root";
+var connectionString = "Host=127.0.0.1; Port=3307; Database=database-name; User Id = your-username; Password = your-password";
 var sqlConnection = new MySqlConnection(connectionString);
